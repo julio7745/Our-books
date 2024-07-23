@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <title>Our books</title>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+    }
+    .book-container {
+      padding: 30px;
+      margin: 0;
+      width: 100vw;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      max-height: 90vh;
+      position: relative;
+    }
+    .page {
+      object-fit: contain;
+      max-height: 80vh;
+    }
+    .btnL, .btnR{
+      position: absolute;
+      height: 100%;
+      width: 50%;
+    }
+    .btnL{
+      left: 0;
+    }
+    .btnR{
+      right: 0;
+    }
+
+  </style>
+</head>
+<body>
+
+  <script>
+
+    const books = [{
+      bgcolor: "#8EC4C4",
+      title: "A busca pelo queijo:",
+      subTitle: "Uma aventura de amor e sorte",
+      data: "16-07-2024",
+      nPages: 3
+    },{
+      bgcolor: "#8EC4C4",
+      title: "A busca pelo queijo:",
+      subTitle: "Uma aventura de amor e sorte",
+      data: "16-07-2024",
+      nPages: 3
+    },{
+      bgcolor: "#8EC4C4",
+      title: "A busca pelo queijo:",
+      subTitle: "Uma aventura de amor e sorte",
+      data: "16-07-2024",
+      nPages: 3
+    },{
+      bgcolor: "#8EC4C4",
+      title: "A busca pelo queijo:",
+      subTitle: "Uma aventura de amor e sorte",
+      data: "16-07-2024",
+      nPages: 3
+    },{
+      bgcolor: "#8EC4C4",
+      title: "A busca pelo queijo:",
+      subTitle: "Uma aventura de amor e sorte",
+      data: "16-07-2024",
+      nPages: 3
+    },{
+      bgcolor: "#8EC4C4",
+      title: "A busca pelo queijo:",
+      subTitle: "Uma aventura de amor e sorte",
+      data: "16-07-2024",
+      nPages: 3
+    },{
+      bgcolor: "#8EC4C4",
+      title: "A busca pelo queijo:",
+      subTitle: "Uma aventura de amor e sorte",
+      data: "16-07-2024",
+      nPages: 3
+    }];
+
+    const pageInView = []
+    books.forEach(element => {
+      pageInView.push(0)
+    });
+    function handlePage (book, next) {
+      
+      if ( next && books[book].nPages > pageInView[book] ) {
+        pageInView[book] += 1 
+      }
+
+      if ( !next && pageInView[book] > 0 ) {
+        pageInView[book] -= 1 
+      }
+
+      var currentScrollTop = window.pageYOffset || 0
+      renderBooks()
+      window.scrollTo({ top: currentScrollTop });
+      
+    }
+
+    const body = document.querySelector('body');
+
+    function renderBooks() {
+
+      body.innerHTML = '';
+
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+      const isLandscape = width > height;
+
+      const widthC = window.innerWidth * 0.9;
+      const heightC = window.innerHeight * 0.9;
+      const isLandscapeC = width > height;
+
+      books.forEach((book, indexB) => {
+        const containerBook = document.createElement('div');
+        containerBook.className = 'book-container'
+        containerBook.id = `b${indexB}`
+        containerBook.style = `
+          background-color: ${book.bgcolor}; 
+          ${isLandscape ? 
+            'height:90vh' :
+            'height:auto'
+          }
+        `
+        containerBook.innerHTML = `
+          <div class='btnL' onClick="handlePage(${indexB}, false)" ><div>
+        `
+
+        for (let indexP = 0; indexP < book.nPages+1; indexP++) {
+          containerBook.innerHTML += `
+            <img 
+              src="./books/${0}/${indexP}.png"
+              style="
+                ${isLandscape ? 
+                  'width: auto; height: 90%;' :
+                  'width: 90%; height: auto;'
+                }
+                ${pageInView[indexB] !== indexP ? 
+                  'display: none;' : 
+                  'display: block;' 
+                }"
+              class="page"
+            >
+          `
+        }
+
+        containerBook.innerHTML += `
+          <div class='btnR' onClick="handlePage(${indexB}, true)" ><div>
+        `
+
+        body.appendChild(containerBook);
+
+      });
+    }
+
+    window.addEventListener('resize', renderBooks);
+    renderBooks();
+
+    window.onload = function() {
+      const params = new URLSearchParams(window.location.search);
+      const scrollToId = params.get('scrollTo');
+      if (scrollToId) {
+        const targetElement = document.getElementById(scrollToId);
+        if (targetElement) {
+          targetElement.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+    };
+    
+  </script>
+</body>
+</html>
