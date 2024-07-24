@@ -12,7 +12,6 @@
       box-sizing: border-box;
     }
     .book-container {
-      padding: 30px;
       margin: 0;
       width: 100vw;
       display: flex;
@@ -52,43 +51,14 @@
       title: "A busca pelo queijo:",
       subTitle: "Uma aventura de amor e sorte",
       data: "16-07-2024",
-      nPages: 3
-    },{
-      bgcolor: "#8EC4C4",
-      title: "A busca pelo queijo:",
-      subTitle: "Uma aventura de amor e sorte",
-      data: "16-07-2024",
-      nPages: 3
-    },{
-      bgcolor: "#8EC4C4",
-      title: "A busca pelo queijo:",
-      subTitle: "Uma aventura de amor e sorte",
-      data: "16-07-2024",
-      nPages: 3
-    },{
-      bgcolor: "#8EC4C4",
-      title: "A busca pelo queijo:",
-      subTitle: "Uma aventura de amor e sorte",
-      data: "16-07-2024",
-      nPages: 3
-    },{
-      bgcolor: "#8EC4C4",
-      title: "A busca pelo queijo:",
-      subTitle: "Uma aventura de amor e sorte",
-      data: "16-07-2024",
-      nPages: 3
-    },{
-      bgcolor: "#8EC4C4",
-      title: "A busca pelo queijo:",
-      subTitle: "Uma aventura de amor e sorte",
-      data: "16-07-2024",
-      nPages: 3
-    },{
-      bgcolor: "#8EC4C4",
-      title: "A busca pelo queijo:",
-      subTitle: "Uma aventura de amor e sorte",
-      data: "16-07-2024",
-      nPages: 3
+      nPages: 5
+    },
+    {
+      bgcolor: "#C47086",
+      title: "Amor além das estrelas:",
+      subTitle: "Uma jornada de supera ão",
+      data: "23-07-2024",
+      nPages: 2
     }];
 
     const pageInView = []
@@ -97,7 +67,7 @@
     });
     function handlePage (book, next) {
       
-      if ( next && books[book].nPages > pageInView[book] ) {
+      if ( next && books[book].nPages -1 > pageInView[book] ) {
         pageInView[book] += 1 
       }
 
@@ -143,7 +113,7 @@
         for (let indexP = 0; indexP < book.nPages+1; indexP++) {
           containerBook.innerHTML += `
             <img 
-              src="./books/${0}/${indexP}.png"
+              src="./books/${indexB}/${indexP}.png"
               style="
                 ${isLandscape ? 
                   'width: auto; height: 90%;' :
@@ -172,7 +142,7 @@
 
     window.onload = function() {
       const params = new URLSearchParams(window.location.search);
-      const scrollToId = params.get('scrollTo');
+      const scrollToId = params.get('book');
       if (scrollToId) {
         const targetElement = document.getElementById(scrollToId);
         if (targetElement) {
