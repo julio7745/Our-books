@@ -146,7 +146,13 @@
       if (scrollToId) {
         const targetElement = document.getElementById(scrollToId);
         if (targetElement) {
-          targetElement.scrollIntoView({ behavior: 'smooth' });
+          const elementPosition = targetElement.offsetTop;
+          const offsetPosition = elementPosition - (window.innerHeight / 2) + (targetElement.offsetHeight / 2);
+
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
         }
       }
     };
